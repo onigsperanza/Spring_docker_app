@@ -15,10 +15,10 @@ COPY src src
 RUN ./gradlew bootJar # 빌드 진행
 RUN mkdir -p build/libs/dependency && (cd build/libs/dependency; jar -xf ../*.jar) # 종속성 추출
 
-##### Run Stage #####
+##### Run Stage ###
 
-# 실행 작업을 위한 JRE 베이스이미지
-FROM openjdk:11-jre-slim
+# 실행 작업을 위한 JRE 베이스이미지d
+FROM openjdk:11-jdk-slim
 
 # 호스트 서버에 전달이 필요한 데이터 저장공간
 VOLUME /tmp
@@ -32,4 +32,5 @@ COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
 # 실행하기
-ENTRYPOINT ["java","-cp","app:app/lib/*","hello.hellospring.HelloSpringApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","Hello.HelloSpring.HelloSpringApplication"]
+
